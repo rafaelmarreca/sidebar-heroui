@@ -1,6 +1,7 @@
 'use client';
 import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -8,7 +9,9 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 
 
 
+
 export const Sidebar = () => {
+    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
     const menuItems = [
@@ -21,7 +24,7 @@ export const Sidebar = () => {
     return (
         <Navbar
             position="static"
-            className={`h-screen ${!collapsed ? "w-64" : "w-16 [&>header]:px-0"} flex-col justify-start rounded-none max-sm:w-full max-sm:h-auto border bg-zinc-300 transition-all `}
+            className={`h-screen ${!collapsed ? "w-64" : "w-16 [&>header]:px-0"} flex-col justify-start rounded-none max-sm:w-full max-sm:h-auto border bg-zinc-300 transition-all ease-in-out `}
             isMenuOpen={isMenuOpen}
             onMenuOpenChange={setIsMenuOpen}
         >
@@ -40,7 +43,7 @@ export const Sidebar = () => {
                     </NavbarBrand>
 
                     {menuItems.map((item, index) => (
-                        <NavbarItem key={index} className="w-full">
+                        <NavbarItem key={index} className="w-full" isActive={pathname === item.href}>
                             <Link
                                 href={item.href}
                                 className="w-full px-4 py-2 rounded hover:bg-default-100"
@@ -57,10 +60,10 @@ export const Sidebar = () => {
                     </NavbarBrand>
 
                     {menuItems.map((item, index) => (
-                        <NavbarItem key={index} className="w-full flex items-center align-center">
+                        <NavbarItem key={index} className="w-full flex items-center align-center data-[active]:bg-white transition-colors" isActive={pathname === item.href}>
                             <Link
                                 href={item.href}
-                                className="w-full px-4 py-2 rounded hover:bg-default-100"
+                                className="w-full px-4 py-2 rounded hover:bg-default-100 transition-colors"
                             >
                                 {item.icon}
                             </Link>
